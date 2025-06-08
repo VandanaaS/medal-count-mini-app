@@ -3,7 +3,7 @@ import {MedalTypes} from '../types/medals';
 
 export function useMedals(){
     const [medals, setMedals] = useState<MedalTypes | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchMedals = async () => {
@@ -19,10 +19,11 @@ export function useMedals(){
             } catch (error) {
                 console.error('Failed to fetch medals:', error);
             } finally {
-                setLoading(false);
+                setError(false);
             }
         };
 
         fetchMedals();
     }, []);
+    return { data: medals, error };
 }

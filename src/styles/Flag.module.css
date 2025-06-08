@@ -1,0 +1,9 @@
+/* styles/Flag.module.css */
+.flag {
+  width: 24px;
+  height: 16px;
+  background-image: url("/flags.png");
+  background-size: 100% auto;
+  display: inline-block;
+  border: 1px solid #ccc;
+}
