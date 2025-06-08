@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useMedals } from '@/hooks/useMedals';
 import Flag from '@/components/Flag';
 import { sortMedals } from '@/utils/sortUtils';
+import MedalColour from '@/components/MedalColour';
 
 export default function Page() {
   const { data, error } = useMedals();
@@ -35,10 +36,18 @@ export default function Page() {
         <div className="col-1">#</div>
         <div className="col-1">Flag</div>
         <div className="col-2">Country</div>
-        <div className="col-1" role="button" onClick={() => setSortKey('gold')}>🥇 {getArrow('gold')}</div>
-        <div className="col-1" role="button" onClick={() => setSortKey('silver')}>🥈 {getArrow('silver')}</div>
-        <div className="col-1" role="button" onClick={() => setSortKey('bronze')}>🥉 {getArrow('bronze')}</div>
-        <div className="col-2" role="button" onClick={() => setSortKey('total')}>Total {getArrow('total')}</div>
+        <div className="col-1" role="button" onClick={() => setSortKey('gold')}>
+          <MedalColour type="gold" /> {getArrow('gold')}
+        </div>
+        <div className="col-1" role="button" onClick={() => setSortKey('silver')}>
+          <MedalColour type="silver" /> {getArrow('silver')}
+        </div>
+        <div className="col-1" role="button" onClick={() => setSortKey('bronze')}>
+          <MedalColour type="bronze" /> {getArrow('bronze')}
+        </div>
+        <div className="col-2" role="button" onClick={() => setSortKey('total')}>
+          <MedalColour type="total" /> {getArrow('total')}
+        </div>
       </div>
 
       {sortedData.slice(0, 10).map((country, index) => (
