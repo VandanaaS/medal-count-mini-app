@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+#  Medal Count App
 
-First, run the development server:
+A React + Next.js (TypeScript) Olympic medal leaderboard app that shows the top 10 countries by medals (gold, silver, bronze, total). Includes Bootstrap layout and uses a sprite image to render country flags.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+##  How to Run Locally
+
+1. Clone the repository:
+
+```
+git clone https://github.com/YOUR_USERNAME/medal-count-mini-app.git
+cd medal-count-mini-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Run the app:
 
-## Learn More
+```
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Visit `http://localhost:3000` in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+##  Project Structure
 
-## Deploy on Vercel
+```
+src/
+ -app/
+  -page.tsx              # App entry — handles sort, fetch & render
+  -layout.tsx            # Global styles (Bootstrap + fonts)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ -components/
+  -MedalList.tsx         # Renders medal data in a responsive Bootstrap grid
+   -Flag.tsx             # Renders flags from sprite using background-position
+   -MedalColour.tsx      # Renders svgs for each Medal Type
+ hooks/
+  -useMedals.ts          # Custom hook for fetching and caching medals.json
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ styles/
+  - Flag.module.css       # Styling for flag sprite rendering
+
+ types/
+ - medal.ts              # Type definitions for CountryMedals
+ utils/
+  - sortUtils.ts          # Sorting logic based on gold/silver/bronze/total
+
+public/
+  data/
+   -medals.json           # Static dataset of medals
+ -flags.png                 # Sprite sheet with all country flags (16px wide each)
+```
+
+---
+
+## Flag Sprite Logic
+
+- Flags are shown using `flags.png` — a single image with all flags in **alphabetical order** by country code.
+- Each flag is `16px` wide, so we calculate offset using:
+
+```tsx
+const offset = countryIndex * 16;
+style={{ backgroundPosition: `-${offset}px 0` }}
+```
+
+- The index (`countryIndex`) is determined by sorting all country codes alphabetically.
+
+---
+
+##  Sorting Logic
+
+- `total`: Sorted by total medals. Tie → more gold.
+- `gold`: Sorted by gold. Tie → more silver.
+- `silver`: Sorted by silver. Tie → more gold.
+- `bronze`: Sorted by bronze. Tie → more gold.
+
+---
+
+##  Potential Improvements
+
+- Add unit tests for `sortUtils` and `useMedals`
+- Improve mobile styling and accessibility
+- Add loader while fetching medals
+- Flags are not displayed as per the sorted country. Flags are displayed alphabetically reading from the sprite. 
+
+---
+
+
+
